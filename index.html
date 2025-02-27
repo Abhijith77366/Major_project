@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Landing Page">
+    <meta name="keywords" content="HTML, CSS, JavaScript, Bootstraps, jquery, Energy Drinks">
+    <meta name="author" content="MH Miyazi">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Drinks Website Landing Page</title>
+    <link rel="stylesheet" href="css/energy.css">
+    <style>
+        /* Floating animation for thumbnails */
+        .thumb img {
+            width: 60px;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Floating animation for right-side content */
+        .imgBox {
+            animation: floatRight 4s ease-in-out infinite;
+        }
+
+        /* Floating effect */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Right-side floating effect (Increased movement) */
+        @keyframes floatRight {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Animation for can switching */
+        .energy {
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+
+        .fade-out {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+
+        .fade-in {
+            transform: scale(1);
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="circle" id="circle"></div>
+        <header>
+            <a href="#" class="logo"><img src="img/logo1.png" alt=""></a>
+            <div class="toggle" onclick="toggleMenu();"></div>
+            <ul class="navigation">
+                <li class="list"><a href="product.html">Products</a></li>
+            </ul>
+        </header>
+        <div class="content">
+            <div class="textBox">
+                <h2>It's not just a Drink <br>It's <span>Sprite</span></h2>
+                <p>Energy drinks are designed to increase energy and mental performance. They contain caffeine, sugar, vitamins, and herbal extracts.</p>
+                <a class="buy" href="#">Buy it</a>
+                <a class="price_tag">Price: $1.25</a>
+            </div>
+            <div class="imgBox">
+                <img src="img/img1.png" class="energy">
+            </div>
+        </div>
+        <ul class="thumb">
+            <li><img src="img/thumb1.png" onclick="imgSlider('img/logo1.png', 'img/img1.png', 'Sprite', '₹329', '#072564')"></li>
+            <li><img src="img/thumb2.png" onclick="imgSlider('img/logo2.png', 'img/img2.png', 'Dr Pepper', '₹234', '#b41c18')"></li>
+            <li><img src="img/thumb3.png" onclick="imgSlider('img/logo3.png', 'img/img3.png', 'Mirinda', '₹249', '#f27a1a')"></li>
+        </ul>
+        <ul class="sci">
+            <li><a href="https://www.facebook.com/"><img src="img/facebook.png"></a></li>
+            <li><a href="https://www.twitter.com/"><img src="img/twitter.png"></a></li>
+            <li><a href="https://www.instagram.com/"><img src="img/instagram.png"></a></li>
+        </ul>
+    </section>
+    <script>
+        function imgSlider(logo, img, name, price, color) {
+            let energyImg = document.querySelector('.energy');
+            let logoImg = document.querySelector('.logo img');
+            let textBoxSpan = document.querySelector('.textBox span');
+            let priceTag = document.querySelector('.price_tag');
+            let circle = document.querySelector('.circle');
+
+            // Apply fade-out effect
+            energyImg.classList.add('fade-out');
+            logoImg.classList.add('fade-out');
+
+            setTimeout(() => {
+                // Change image, text, and styles after fade-out
+                logoImg.src = logo;
+                energyImg.src = img;
+                textBoxSpan.innerText = name;
+                priceTag.innerText = 'Price: ' + price;
+                circle.style.backgroundColor = color;
+
+                // Apply fade-in effect
+                energyImg.classList.remove('fade-out');
+                energyImg.classList.add('fade-in');
+
+                logoImg.classList.remove('fade-out');
+                logoImg.classList.add('fade-in');
+            }, 300);
+        }
+
+        function toggleMenu() {
+            var menuToggle = document.querySelector('.toggle');
+            var navigation = document.querySelector('.navigation');
+            menuToggle.classList.toggle('active');
+            navigation.classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>

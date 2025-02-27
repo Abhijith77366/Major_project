@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products - Energy Drinks</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { min-height: 100vh; background: #f5f5f5; transition: background-color 0.5s ease; }
+        .logo { position: absolute; top: 30px; left: 50px; width: 150px; }
+        .cart-icon { position: fixed; top: 20px; right: 50px; font-size: 24px; color: #fff; cursor: pointer; z-index: 101; }
+        .cart-count { position: absolute; top: -10px; right: -10px; background: #FF4D4D; color: #fff; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+        .products-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; padding: 120px 50px 50px; }
+        .product-card { background: #fff; border-radius: 15px; padding: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.3s; }
+        .product-card:hover { transform: translateY(-10px); }
+        .product-image { width: 180px; margin: 0 auto 20px; }
+        .product-image img { width: 100%; height: auto; }
+        .price { font-size: 1.4em; color: #FF4D4D; margin-bottom: 15px; }
+        .add-to-cart { padding: 10px 25px; background: #FF4D4D; color: #fff; border: none; border-radius: 25px; cursor: pointer; transition: transform 0.3s; }
+        .add-to-cart:hover { transform: scale(1.1); }
+        .flying-item { position: fixed; z-index: 1000; pointer-events: none; }
+    </style>
+</head>
+<body>
+    <img src="logo.png" alt="Energy Drink Logo" class="logo">
+    <div class="cart-icon">
+        🛒 <span class="cart-count">0</span>
+    </div>
+
+    <div class="products-container">
+        <div class="product-card" data-bg-color="#fddc8b">
+            <div class="product-image"><img src="img/thumb1.png" alt="Power Surge"></div>
+            <h2>Power Surge</h2>
+            <p>Ultimate boost with our signature energy drink.</p>
+            <div class="price">₹299</div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card" data-bg-color="#98e4d7">
+            <div class="product-image"><img src="img/thumb2.png" alt="Arctic Blast"></div>
+            <h2>Arctic Blast</h2>
+            <p>Cool down and power up with mint-infused energy blend.</p>
+            <div class="price">₹299</div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card" data-bg-color="#fbc2eb">
+            <div class="product-image"><img src="img/thumb3.png" alt="Berry Rush"></div>
+            <h2>Berry Rush</h2>
+            <p>Fruity explosion with natural energy boosters.</p>
+            <div class="price">₹349</div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card" data-bg-color="#b0e57c">
+            <div class="product-image"><img src="img/cocoq.png" alt="Green Storm"></div>
+            <h2>Green Storm</h2>
+            <p>Green tea & matcha-infused energy drink.</p>
+            <div class="price">₹329</div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card" data-bg-color="#e2b1f0">
+            <div class="product-image"><img src="img/thumbs-removebg-preview.png" alt="Purple Thunder"></div>
+            <h2>Purple Thunder</h2>
+            <p>Grape & acai berry punch for powerful energy.</p>
+            <div class="price">₹379</div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card" data-bg-color="#ffcccb">
+            <div class="product-image"><img src="img/blackcan1.png" alt="Fiery Blaze"></div>
+            <h2>Fiery Blaze</h2>
+            <p>Spicy cinnamon kick with caffeine boost.</p>
+            <div class="price">₹299</div>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let cartCountElement = document.querySelector('.cart-count');
+        let cartIcon = document.querySelector('.cart-icon');
+        cartCountElement.textContent = cart.length;
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const productCard = e.target.closest('.product-card');
+                const productName = productCard.querySelector('h2').textContent;
+                const productPrice = productCard.querySelector('.price').textContent;
+                const productImage = productCard.querySelector('.product-image img').src;
+                const bgColor = productCard.getAttribute('data-bg-color');
+
+                // Change background color
+                document.body.style.backgroundColor = bgColor;
+
+                // Add animation
+                const productClone = productCard.querySelector('.product-image img').cloneNode(true);
+                productClone.classList.add('flying-item');
+                document.body.appendChild(productClone);
+                
+                let rect = productCard.querySelector('.product-image img').getBoundingClientRect();
+                productClone.style.position = 'absolute';
+                productClone.style.left = rect.left + 'px';
+                productClone.style.top = rect.top + 'px';
+                productClone.style.width = '80px';
+
+                gsap.to(productClone, {
+                    duration: 1,
+                    left: cartIcon.getBoundingClientRect().left + 'px',
+                    top: cartIcon.getBoundingClientRect().top + 'px',
+                    scale: 0.2,
+                    opacity: 0,
+                    onComplete: () => productClone.remove()
+                });
+
+                // Update cart data
+                cart.push({ name: productName, price: productPrice, image: productImage });
+                localStorage.setItem('cart', JSON.stringify(cart));
+                cartCountElement.textContent = cart.length;
+            });
+        });
+
+        cartIcon.addEventListener('click', () => window.location.href = "cart.html");
+    </script>
+</body>
+</html>

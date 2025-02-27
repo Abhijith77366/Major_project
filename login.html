@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Register - Energy Drinks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #072564;
+            transition: background 0.8s ease;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 800px;
+            height: 500px;
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+            animation: containerFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes containerFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .form-section {
+            flex: 1;
+            padding: 40px;
+            transition: all 0.5s ease;
+            transform-origin: left;
+        }
+
+        .image-section {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.8s ease;
+            animation: imageFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes imageFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        .form-section h2 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 30px;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            animation: slideRight 0.5s ease;
+        }
+
+        @keyframes slideRight {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.02);
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        button {
+            background: #fff;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        button:hover {
+            background: #072564;
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .switch-form {
+            color: #fff;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .switch-form:hover {
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            transform: scale(1.05);
+        }
+
+        /* Background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            animation: particleFloat 15s infinite linear;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="container">
+        <div class="form-section" id="loginForm">
+            <h2>Login</h2>
+            <form action="index.html">
+                <div class="input-group">
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p class="switch-form" onclick="toggleForm()">Don't have an account? Register</p>
+        </div>
+        
+        <div class="form-section" id="registerForm" style="display: none;">
+            <h2>Register</h2>
+            <form onsubmit="return false;">
+                <div class="input-group">
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Confirm Password" required>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+            <p class="switch-form" onclick="toggleForm()">Already have an account? Login</p>
+        </div>
+
+        <div class="image-section">
+            <img src="img/img1.png" alt="Energy Drink" id="formImage">
+        </div>
+    </div>
+
+    <script>
+        const colors = {
+            login: '#072564',    // Blue
+            register: '#8B0000'  // Dark Red
+        };
+        let isLoginForm = true;
+
+        // Create floating particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            for(let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 5 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDuration = Math.random() * 15 + 5 + 's';
+                particle.style.opacity = Math.random() * 0.5;
+                particles.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        function toggleForm() {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const formImage = document.getElementById('formImage');
+            const container = document.querySelector('.container');
+
+            isLoginForm = !isLoginForm;
+            
+            // Add rotation animation to container
+            container.style.transform = 'scale(0.9) rotateY(180deg)';
+            setTimeout(() => {
+                if (isLoginForm) {
+                    loginForm.style.display = 'block';
+                    registerForm.style.display = 'none';
+                    formImage.src = 'img/img1.png';
+                    document.body.style.background = colors.login;  // Set blue background for login
+                } else {
+                    loginForm.style.display = 'none';
+                    registerForm.style.display = 'block';
+                    formImage.src = 'img/img2.png';
+                    document.body.style.background = colors.register;  // Set red background for register
+                }
+                
+                // Reset container animation
+                container.style.transform = 'scale(1) rotateY(0deg)';
+            }, 300);
+
+            // Animate image
+            formImage.style.transform = 'scale(0.8) rotate(-10deg)';
+            setTimeout(() => {
+                formImage.style.transform = 'scale(1) rotate(0deg)';
+            }, 300);
+        }
+    </script>
+</body>
+</html>
+
+
