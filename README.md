@@ -1,1 +1,1 @@
-# Major_project
+its a cold drink website frontend 
